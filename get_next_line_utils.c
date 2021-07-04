@@ -13,7 +13,8 @@ size_t	ft_strlen(const char *str)
 char	*ft_strjoin_free(char *surplus, char *buf)
 {
 	char	*ptr;
-	size_t	len;
+	size_t	len_sur;
+	size_t	len_buf;
 
 	if (!surplus)
 	{
@@ -22,8 +23,9 @@ char	*ft_strjoin_free(char *surplus, char *buf)
 	}
 	if (!surplus || !buf)
 		return (NULL);
-	len = ft_strlen(surplus) + ft_strlen(buf);
-	ptr = (char *)malloc(sizeof(*surplus) * (len + 1));
+	len_sur = ft_strlen(surplus);
+	len_buf = ft_strlen(buf);
+	ptr = (char *)malloc(sizeof(*surplus) * (len_sur + len_buf + 1));
 	if (!ptr)
 	{
 		free (buf);
@@ -34,8 +36,8 @@ char	*ft_strjoin_free(char *surplus, char *buf)
 	while (*buf)
 		*ptr++ = *buf++;
 	*ptr = 0;
-	free(surplus);
-	return (ptr - len);
+	free(surplus - len_sur);
+	return (ptr - len_sur - len_buf);
 }
 
 int	ft_sheck_rtn(char *surplus)
