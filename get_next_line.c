@@ -1,52 +1,54 @@
 #include "get_next_line.h"
 
-static char	*ft_get_surplus(char *save)
+static char	*ft_get_surplus(char *surplus)
 {
-	char	*rtn;
+	char	*str;
 	int		i;
 	int		j;
 
 	i = 0;
 	j = 0;
-	if (!save)
+	if (!surplus)
 		return (0);
-	while (save[i] && save[i] != '\n')
+	while (surplus[i] && surplus[i] != '\n')
 		i++;
-	if (!save[i])
+	if (!surplus[i])
 	{
-		free(save);
+		free(surplus);
 		return (0);
 	}
-	if (!(rtn = malloc(sizeof(char) * ((ft_strlen(save) - i) + 1))))
-		return (0);
-	i++;
-	while (save[i])
-		rtn[j++] = save[i++];
-	rtn[j] = '\0';
-	free(save);
-	return (rtn);
-}
-
-static char	*ft_get_str(char *str)
-{
-	int		i;
-	char	*rtn;
-
-	i = 0;
+	str = malloc(sizeof(char) * ((ft_strlen(surplus) - i) + 1));
 	if (!str)
 		return (0);
-	while (str[i] && str[i] != '\n')
+	i++;
+	while (surplus[i])
+		str[j++] = surplus[i++];
+	str[j] = '\0';
+	free(surplus);
+	return (str);
+}
+
+static char	*ft_get_str(char *surplus)
+{
+	int		i;
+	char	*surplus_end;
+
+	i = 0;
+	if (!surplus)
+		return (0);
+	while (surplus[i] && surplus[i] != '\n')
 		i++;
-	if (!(rtn = malloc(sizeof(char) * (i + 1))))
+	surplus_end = malloc(sizeof(char) * (i + 1));
+	if (!surplus_end)
 		return (0);
 	i = 0;
-	while (str[i] && str[i] != '\n')
+	while (surplus[i] && surplus[i] != '\n')
 	{
-		rtn[i] = str[i];
+		surplus_end[i] = surplus[i];
 		i++;
 	}
-	rtn[i] = '\0';
-	return (rtn);
+	surplus_end[i] = '\0';
+	return (surplus_end);
 }
 
 static char	*ft_malloc_check_error(int fd, char **str)

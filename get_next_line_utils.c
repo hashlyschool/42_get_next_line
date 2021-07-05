@@ -10,21 +10,30 @@ size_t	ft_strlen(const char *str)
 	return (i);
 }
 
+static void	ft_malloc_strlen(char **surplus, char *buf,
+		size_t *len_sur, size_t *len_buf)
+{
+	if (!(*surplus))
+	{
+		*surplus = malloc(1);
+		(*surplus)[0] = 0;
+	}
+	if (!(*surplus) || !buf)
+		return ;
+	*len_sur = ft_strlen(*surplus);
+	*len_buf = ft_strlen(buf);
+	return ;
+}
+
 char	*ft_strjoin_free(char *surplus, char *buf)
 {
 	char	*ptr;
 	size_t	len_sur;
 	size_t	len_buf;
 
-	if (!surplus)
-	{
-		surplus = malloc(1);
-		surplus[0] = 0;
-	}
+	ft_malloc_strlen(&surplus, buf, &len_sur, &len_buf);
 	if (!surplus || !buf)
 		return (NULL);
-	len_sur = ft_strlen(surplus);
-	len_buf = ft_strlen(buf);
 	ptr = (char *)malloc(sizeof(*surplus) * (len_sur + len_buf + 1));
 	if (!ptr)
 	{
